@@ -22,14 +22,14 @@ function printMorePayment($MORE_PAYMENT) {
     foreach ($MORE_PAYMENT as $payment => $url) {
         if ($url !== '') {
             echo "<br><div class=\"mdui-typo-title\"><p>使用 ".$payment."<br>向 ".NAME." 付款</p></div><br>";
-            echo "<img src=\"https://www.zhihu.com/qrcode?url=".urlencode($url)."\" width=\"300\" height=\"300\" alt=\"\"><br><br><hr/>";
+            echo "<img src=\""QRCODE_API_URL.urlencode($url)."\" width=\"300\" height=\"300\" alt=\"\"><br><br><hr/>";
         }
     }
     echo '</div>';
     return 0;
 }
 
-$avatar = AVATAR_URL ?: "https://fifcom.cn/avatar/?transparent=1";
+$avatar = AVATAR_URL ?: "https://secure.gravatar.com/avatar/";
 if (TLS_ENCRYPT == 'auto' || TLS_ENCRYPT == '') {
     $scheme = ( isset($_SERVER['HTTPS']) 
                             && $_SERVER['HTTPS'] == 'on' 

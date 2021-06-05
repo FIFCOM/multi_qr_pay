@@ -49,14 +49,14 @@ function printMorePayment($MORE_PAYMENT) {
     foreach ($MORE_PAYMENT as $payment => $url) {
         if ($url !== '') {
             echo "<br><div class=\"mdui-typo-title\"><p>使用 ".$payment."<br>向 ".NAME." 付款</p></div><br>";
-            echo "<img src=\"https://www.zhihu.com/qrcode?url=".urlencode($url)."\" width=\"300\" height=\"300\" alt=\"\"><br><br><hr/>";
+            echo "<img src=\"".QRCODE_API_URL.urlencode($url)."\" width=\"300\" height=\"300\" alt=\"\"><br><br><hr/>";
         }
     }
     echo '</div>';
     return 0;
 }
 
-$avatar = AVATAR_URL ?: "https://fifcom.cn/avatar/?transparent=1";
+$avatar = AVATAR_URL ?: "https://secure.gravatar.com/avatar/";
 if (TLS_ENCRYPT == 'auto' || TLS_ENCRYPT == '') {
     $scheme = ( isset($_SERVER['HTTPS']) 
                             && $_SERVER['HTTPS'] == 'on' 
@@ -129,7 +129,7 @@ redirect($_SERVER['HTTP_USER_AGENT'], $payment, $scheme);
     <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '' : '<!--';?>
     <a href="<?=ALIPAY_URL?>" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-<?=ACCENT_THEME?>">立即付款</a><br><br><br>
     <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '' : '-->';?>
-    <img src="https://www.zhihu.com/qrcode?url=<?=urlencode(ALIPAY_URL)?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode(ALIPAY_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
@@ -139,7 +139,7 @@ redirect($_SERVER['HTTP_USER_AGENT'], $payment, $scheme);
   <div id="wechat">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') ? '长按识别二维码' : '微信扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
-    <img src="https://www.zhihu.com/qrcode?url=<?=urlencode(WECHATPAY_URL)?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode(WECHATPAY_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '-->' : '';?>
@@ -148,7 +148,7 @@ redirect($_SERVER['HTTP_USER_AGENT'], $payment, $scheme);
   <div id="qqpay">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') ? '长按识别二维码' : 'QQ 扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
-    <img src="https://www.zhihu.com/qrcode?url=<?=urlencode(QQPAY_URL)?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode(QQPAY_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   <?php echo !QQPAY_URL || QQPAY_URL == '' ? '-->' : '';?>
@@ -162,7 +162,7 @@ redirect($_SERVER['HTTP_USER_AGENT'], $payment, $scheme);
   <div id="main">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p>扫一扫<br>向 <?=NAME?> 付款</p></div><br>
-    <img src="https://www.zhihu.com/qrcode?url=<?=urlencode($scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode($scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   
