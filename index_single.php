@@ -134,7 +134,6 @@ redirect($_SERVER['HTTP_USER_AGENT'], $payment, $scheme);
   </div>
   <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
   
-  
   <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '<!--' : '';?>
   <div id="wechat">
     <div class="mdui-container mdui-typo center">
