@@ -48,7 +48,7 @@ function printMorePayment($MORE_PAYMENT) {
     echo '<div class="mdui-container mdui-typo center">';
     foreach ($MORE_PAYMENT as $payment => $url) {
         if ($url !== '') {
-            echo "<br><div class=\"mdui-typo-title\"><p>使用 ".$payment."<br>向 ".NAME." 付款</p></div><br>";
+            echo "<br><div class=\"mdui-typo-title\"><p>使用 ".$payment." <br>向 ".NAME." 付款</p></div><br>";
             echo "<img src=\"".QRCODE_API_URL.urlencode($url)."\" width=\"300\" height=\"300\" alt=\"\"><br><br><hr/>";
         }
     }
