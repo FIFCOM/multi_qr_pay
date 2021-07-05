@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title><?php echo $payment ? '使用'.strtoupper($payment) : '';?>向<?=NAME?>付款</title>
+  <title><?php echo $GLOBALS['payment'] ? '使用'.strtoupper($GLOBALS['payment']) : '';?>向<?=NAME?>付款</title>
   <link rel="shortcut icon" href="<?=AVATAR_URL?>"/>
   <style>.center {text-align: center}</style>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"/>
@@ -23,12 +23,12 @@
     </a>
     <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
     
-    <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '<!--' : '';?>
+    <?php echo !WECHAT_URL || WECHAT_URL == '' ? '<!--' : '';?>
     <a href="#wechat" class="mdui-ripple mdui-ripple-white">
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 36 36" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M383.6,616.9c-58.7,32.6-67.4-18.3-67.4-18.3l-73.5-170.9c-28.3-81.2,24.5-36.6,24.5-36.6s45.3,34.1,79.6,54.9c34.3,20.8,73.5,6.1,73.5,6.1l480.6-221C812.3,121.3,665.8,49.4,500,49.4c-270.6,0-490,191.2-490,427.1C10,612.2,82.6,733,195.8,811.3l-20.4,116.8c0,0-9.9,34.1,24.5,18.3c23.5-10.8,83.4-49.4,119-73c56,19.5,117.1,30.3,181.1,30.3c270.6,0,490-191.2,490-427.1c0-68.3-18.5-132.9-51.2-190.1C785.6,378.2,429.5,591.4,383.6,616.9L383.6,616.9L383.6,616.9z"/></g></svg>
       <label><b>微信支付</b></label>
     </a>
-    <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '-->' : '';?>
+    <?php echo !WECHAT_URL || WECHAT_URL == '' ? '-->' : '';?>
     
     <?php echo !QQPAY_URL || QQPAY_URL == '' ? '<!--' : '';?>
     <a href="#qqpay" class="mdui-ripple mdui-ripple-white">
@@ -37,12 +37,12 @@
     </a>
     <?php echo !QQPAY_URL || QQPAY_URL == '' ? '-->' : '';?>
     
-    <?php echo !morePayment($MORE_PAYMENT) ? '<!--' : '';?>
+    <?php echo !morePayment($GLOBALS['MORE_PAYMENT']) ? '<!--' : '';?>
     <a href="#more" class="mdui-ripple mdui-ripple-white">
       <i class="mdui-icon material-icons">more_horiz</i>
       <label><b>更多</b></label>
     </a>
-    <?php echo !morePayment($MORE_PAYMENT) ? '-->' : '';?>
+    <?php echo !morePayment($GLOBALS['MORE_PAYMENT']) ? '-->' : '';?>
   </div>
 </div>
 
@@ -51,23 +51,26 @@
   <div id="alipay">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p>支付宝扫一扫<?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '或点击下方按钮' : '';?><br>向 <?=NAME?> 付款</p></div><br>
-    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '' : '<!--';?>
+    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') ? '' : '<!--';?>
     <a href="<?=ALIPAY_URL?>" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-<?=ACCENT_THEME?>">立即付款</a><br><br><br>
-    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '' : '-->';?>
+    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') ? '' : '-->';?>
+
+    <?php echo $GLOBALS['payment'] != 'alipay' ? '' : '<!--';?>
     <img src="<?=QRCODE_API_URL.urlencode(ALIPAY_URL)?>" width="300" height="300" alt=""><hr/>
+    <?php echo $GLOBALS['payment'] != 'alipay' ? '' : '-->';?>
     </div>
   </div>
   <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
   
   
-  <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '<!--' : '';?>
+  <?php echo !WECHAT_URL || WECHAT_URL == '' ? '<!--' : '';?>
   <div id="wechat">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') ? '长按识别二维码' : '微信扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
-    <img src="<?=QRCODE_API_URL.urlencode(WECHATPAY_URL)?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode(WECHAT_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
-  <?php echo !WECHATPAY_URL || WECHATPAY_URL == '' ? '-->' : '';?>
+  <?php echo !WECHAT_URL || WECHAT_URL == '' ? '-->' : '';?>
   
   <?php echo !QQPAY_URL || QQPAY_URL == '' ? '<!--' : '';?>
   <div id="qqpay">
@@ -78,24 +81,24 @@
   </div>
   <?php echo !QQPAY_URL || QQPAY_URL == '' ? '-->' : '';?>
   
-  <?php echo !morePayment($MORE_PAYMENT) ? '<!--' : '';?>
+  <?php echo !morePayment($GLOBALS['MORE_PAYMENT']) ? '<!--' : '';?>
   <div id="more">
-    <?php printMorePayment($MORE_PAYMENT); ?>
+    <?php printMorePayment($GLOBALS['MORE_PAYMENT']); ?>
   </div>
-  <?php echo !morePayment($MORE_PAYMENT) ? '-->' : '';?>
+  <?php echo !morePayment($GLOBALS['MORE_PAYMENT']) ? '-->' : '';?>
   
   <div id="main">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p>扫一扫<br>向 <?=NAME?> 付款</p></div><br>
-    <img src="<?=QRCODE_API_URL.urlencode($scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode($GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   
   <div class="mdui-container mdui-typo center">
     <div class="mdui-typo-body-2-opacity">请确认您在访问</div>
     <div class="mdui-chip mdui-hoverable">
-                <span class="mdui-chip-icon <?php echo $scheme == 'https://' ? 'mdui-color-green' : '';?>"><i class="mdui-icon material-icons"><?php echo $scheme === 'https://' ? 'https' : 'http';?></i></span>
-                <span class="mdui-chip-title"><?=$scheme.$_SERVER['HTTP_HOST'];?></span>
+                <span class="mdui-chip-icon <?php echo $GLOBALS['scheme'] == 'https://' ? 'mdui-color-green' : '';?>"><i class="mdui-icon material-icons"><?php echo $GLOBALS['scheme'] === 'https://' ? 'https' : 'http';?></i></span>
+                <span class="mdui-chip-title"><?=$GLOBALS['scheme'].$_SERVER['HTTP_HOST'];?></span>
     </div>
     <div class="mdui-typo-caption">Powered by <a style="color:<?=PRIMARY_THEME?>" href="https://github.com/FIFCOM/multi_qr_pay" target="_blank">multi_qr_pay</a> v<?=MULTI_QR_PAY_VERSION?></div><br><br>
     </div>

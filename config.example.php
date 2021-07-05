@@ -1,8 +1,8 @@
 <?php
 
-const NAME = '';
-const ALIPAY_URL = '';
-const WECHATPAY_URL = '';
+const NAME = 'test';
+const ALIPAY_URL = 'www.rickroll.com';
+const WECHAT_URL = '';
 const QQPAY_URL = '';
 
 // Add more payment :
