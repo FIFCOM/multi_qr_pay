@@ -1,6 +1,12 @@
 <?php
 function init() {
+    $pid = $_GET['pid'] ?? 0;
+    if ($pid) {
 
+    } else {
+        $pid = randomToken(8);
+        header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?pid=" . $pid ."&payment=". $GLOBALS['payment'] . "&#" . $GLOBALS['payment']);
+    }
 }
 
 function randomToken($strLength): string
@@ -15,18 +21,15 @@ function randomToken($strLength): string
     return $token;
 }
 
-function redirect($ua, $payment, $scheme) {
-    /*
-     *
-     */
+function redirect($ua, $payment) {
     if (strpos($ua, 'AlipayClient/') && $payment !== 'alipay')
-        header("Location: ".$scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=alipay&#alipay");
+        header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=alipay&#alipay");
         
     if (strpos($ua, 'MicroMessenger') && $payment !== 'wechat')
-        header("Location: ".$scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=wechat&#wechat");
+        header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=wechat&#wechat");
         
     if (strpos($ua, 'QQ/') && $payment !== 'wechat')
-        header("Location: ".$scheme.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=qqpay&#qqpay");
+        header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=qqpay&#qqpay");
 }
 
 function morePayment($MORE_PAYMENT): int

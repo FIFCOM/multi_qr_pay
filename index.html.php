@@ -90,7 +90,7 @@
   <div id="main">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p>扫一扫<br>向 <?=NAME?> 付款</p></div><br>
-    <img src="<?=QRCODE_API_URL.urlencode($GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'])?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode($GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"])?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   
