@@ -1,7 +1,7 @@
 <?php
 
-const NAME = 'FIFCOM';
-const ALIPAY_URL = 'www.example.com';
+const NAME = '';
+const ALIPAY_URL = '';
 const WECHAT_URL = '';
 const QQPAY_URL = '';
 

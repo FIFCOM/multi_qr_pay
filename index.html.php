@@ -47,26 +47,19 @@
 </div>
 
 <div class="mdui-container-fluid">
-  <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '<!--' : '';?>
-  <div id="alipay">
-    <div class="mdui-container mdui-typo center">
-    <br><div class="mdui-typo-title"><p>支付宝扫一扫<?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'Alipay') ? '或点击下方按钮' : '';?><br>向 <?=NAME?> 付款</p></div><br>
-    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') ? '' : '<!--';?>
-    <a href="<?=ALIPAY_URL?>" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-<?=ACCENT_THEME?>">立即付款</a><br><br><br>
-    <?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') ? '' : '-->';?>
-
-    <?php echo $GLOBALS['payment'] != 'alipay' ? '' : '<!--';?>
-    <img src="<?=QRCODE_API_URL.urlencode(ALIPAY_URL)?>" width="300" height="300" alt=""><hr/>
-    <?php echo $GLOBALS['payment'] != 'alipay' ? '' : '-->';?>
+    <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '<!--' : '';?>
+    <div id="alipay">
+        <div class="mdui-container mdui-typo center">
+            <br><div class="mdui-typo-title"><p>支付宝扫一扫<br>向 <?=NAME?> 付款</p></div><br>
+            <img src="<?=QRCODE_API_URL.urlencode(ALIPAY_URL)?>" width="300" height="300" alt=""><hr/>
+        </div>
     </div>
-  </div>
-  <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
-  
-  
+    <?php echo !ALIPAY_URL || ALIPAY_URL == '' ? '-->' : '';?>
+
   <?php echo !WECHAT_URL || WECHAT_URL == '' ? '<!--' : '';?>
   <div id="wechat">
     <div class="mdui-container mdui-typo center">
-    <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') ? '长按识别二维码' : '微信扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
+    <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger/') ? '长按下方二维码识别' : '微信扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
     <img src="<?=QRCODE_API_URL.urlencode(WECHAT_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
@@ -75,7 +68,7 @@
   <?php echo !QQPAY_URL || QQPAY_URL == '' ? '<!--' : '';?>
   <div id="qqpay">
     <div class="mdui-container mdui-typo center">
-    <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') ? '长按识别二维码' : 'QQ 扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
+    <br><div class="mdui-typo-title"><p><?php echo strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') ? '长按下方二维码识别' : 'QQ 扫一扫';?><br>向 <?=NAME?> 付款</p></div><br>
     <img src="<?=QRCODE_API_URL.urlencode(QQPAY_URL)?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
@@ -90,7 +83,7 @@
   <div id="main">
     <div class="mdui-container mdui-typo center">
     <br><div class="mdui-typo-title"><p>扫一扫<br>向 <?=NAME?> 付款</p></div><br>
-    <img src="<?=QRCODE_API_URL.urlencode($GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"])?>" width="300" height="300" alt=""><hr/>
+    <img src="<?=QRCODE_API_URL.urlencode($GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])?>" width="300" height="300" alt=""><hr/>
     </div>
   </div>
   
