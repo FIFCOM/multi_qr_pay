@@ -433,7 +433,7 @@ if (!file_exists('config.php')) {
             <button class="mdui-btn mdui-ripple" mdui-dialog-confirm="">确定</button>
         </div>
     </div>
-    <br><br><hr/><br><br>
+    <br><br><hr/>
     <div class="mdui-container mdui-typo center">
         <div class="mdui-typo-body-2-opacity">请确认您在访问</div>
         <div class="mdui-chip mdui-hoverable">
