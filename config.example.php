@@ -22,6 +22,6 @@ const ACCENT_THEME = 'pink';
 const TLS_ENCRYPT = 'auto';
 const QRCODE_API_URL = 'https://www.zhihu.com/qrcode?url=';
 
-const MULTI_QR_PAY_VERSION = '1.0';
+const MULTI_QR_PAY_VERSION = '1.1';
 error_reporting(E_ALL);
 $_ERROR = array();

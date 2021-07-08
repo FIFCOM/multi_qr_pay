@@ -32,7 +32,7 @@ if (!file_exists('config.php')) {
         $config_file[21] = 'const TLS_ENCRYPT = \'auto\';';
         $config_file[22] = 'const QRCODE_API_URL = \'https://www.zhihu.com/qrcode?url=\';';
         $config_file[23] = '';
-        $config_file[24] = 'const MULTI_QR_PAY_VERSION = \'1.0\';';
+        $config_file[24] = 'const MULTI_QR_PAY_VERSION = \'1.1\';';
         $config_file[25] = 'error_reporting(E_ALL);';
         $config_file[26] = '$_ERROR = array();';
         $logfile = fopen("config.php", "a+");
@@ -40,12 +40,12 @@ if (!file_exists('config.php')) {
             fwrite($logfile, "$string\n");
         }
         fclose($logfile);
-        $scheme = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ? 'https://' : 'http://';
+        $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
         header("Location: ".$scheme.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
         exit();
     }
 } else {
-    $scheme = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ? 'https://' : 'http://';
+    $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
     echo '已安装。如需重新安装，请删除当前目录下的 config.php (建议先备份) 后重新访问本页面.<br>multi_qr_pay<br><a href="'.$scheme.$_SERVER['HTTP_HOST'].str_replace('/install.php', '/index.php', $_SERVER['PHP_SELF']).'">返回主页</a>';
     exit();
 }
@@ -437,8 +437,8 @@ if (!file_exists('config.php')) {
     <div class="mdui-container mdui-typo center">
         <div class="mdui-typo-body-2-opacity">请确认您在访问</div>
         <div class="mdui-chip mdui-hoverable">
-            <span class="mdui-chip-icon <?php echo $GLOBALS['scheme'] == 'https://' ? 'mdui-color-green' : '';?>"><i class="mdui-icon material-icons"><?php echo $GLOBALS['scheme'] === 'https://' ? 'https' : 'http';?></i></span>
-            <span class="mdui-chip-title"><?=$GLOBALS['scheme'].$_SERVER['HTTP_HOST'];?></span>
+            <span class="mdui-chip-icon <?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'mdui-color-green' : '';?>"><i class="mdui-icon material-icons"><?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https' : 'http';?></i></span>
+            <span class="mdui-chip-title"><?php $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; echo $scheme.$_SERVER['HTTP_HOST'];?></span>
         </div>
         <div class="mdui-typo-caption">Powered by <a style="color:<?=PRIMARY_THEME?>" href="https://github.com/FIFCOM/multi_qr_pay" target="_blank">multi_qr_pay</a> Installer</div><br><br>
     </div>
