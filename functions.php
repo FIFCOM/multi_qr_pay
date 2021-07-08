@@ -13,13 +13,13 @@ function randomToken($strLength): string
 }
 
 function redirect($payment) {
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') && $payment !== 'alipay')
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'AlipayClient/') && $payment !== 'alipay' && ALIPAY_URL)
         header("Location: ".ALIPAY_URL);
         
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger/') && $payment !== 'wechat')
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger/') && $payment !== 'wechat' && WECHAT_URL)
         header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=wechat&#wechat");
         
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') && $payment !== 'wechat')
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'QQ/') && $payment !== 'qqpay' && QQPAY_URL)
         header("Location: ".$GLOBALS['scheme'].$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?payment=qqpay&#qqpay");
 }
 

@@ -1,14 +1,12 @@
 <?php
 if (!file_exists('config.php')) {
-    //var_dump($_REQUEST);
-    $name = isset($_REQUEST['name']) && strlen($_REQUEST['name']) > 0 ? $_REQUEST['name'] : '';
-    $alipay = isset($_REQUEST['alipay']) && filter_var($_REQUEST['alipay'], FILTER_VALIDATE_URL) === true ? $_REQUEST['alipay'] : '';
-    $wechat = isset($_REQUEST['wechat']) && filter_var($_REQUEST['wechat'], FILTER_VALIDATE_URL) === true ? $_REQUEST['wechat'] : '';
-    $qq = isset($_REQUEST['qqpay']) && filter_var($_REQUEST['qqpay'], FILTER_VALIDATE_URL) === true ? $_REQUEST['qqpay'] : '';
-    $avatar = isset($_REQUEST['avatar_url']) && filter_var($_REQUEST['avatar_url'], FILTER_VALIDATE_URL) === true ? $_REQUEST['avatar_url'] : 'https://secure.gravatar.com/avatar/';
-    $theme_primary = isset($_REQUEST['theme_primary']) && strlen($_REQUEST['theme_primary']) > 2 ? $_REQUEST['theme_primary'] : '';
-    $theme_accent = isset($_REQUEST['theme_accent']) && strlen($_REQUEST['theme_accent']) > 2 ? $_REQUEST['theme_accent'] : '';
-    print_r(get_defined_vars());
+    $name = (isset($_REQUEST['name']) && strlen($_REQUEST['name']) > 0) ? $_REQUEST['name'] : '';
+    $alipay = (isset($_REQUEST['alipay']) && filter_var($_REQUEST['alipay'], FILTER_VALIDATE_URL)) ? $_REQUEST['alipay'] : '';
+    $wechat = (isset($_REQUEST['wechat']) && filter_var($_REQUEST['wechat'], FILTER_VALIDATE_URL)) ? $_REQUEST['wechat'] : '';
+    $qq = (isset($_REQUEST['qqpay']) && filter_var($_REQUEST['qqpay'], FILTER_VALIDATE_URL)) ? $_REQUEST['qqpay'] : '';
+    $avatar = (isset($_REQUEST['avatar_url']) && filter_var($_REQUEST['avatar_url'], FILTER_VALIDATE_URL)) ? $_REQUEST['avatar_url'] : 'https://secure.gravatar.com/avatar/';
+    $theme_primary = (isset($_REQUEST['theme-primary']) && strlen($_REQUEST['theme-primary']) > 2) ? $_REQUEST['theme-primary'] : '';
+    $theme_accent = (isset($_REQUEST['theme-accent']) && strlen($_REQUEST['theme-accent']) > 2) ? $_REQUEST['theme-accent'] : '';
     if ($name && $theme_primary && $theme_accent) { // submit
         $config_file[0] = '<?php';
         $config_file[1] = '';
@@ -42,9 +40,14 @@ if (!file_exists('config.php')) {
             fwrite($logfile, "$string\n");
         }
         fclose($logfile);
+        $scheme = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ? 'https://' : 'http://';
+        header("Location: ".$scheme.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+        exit();
     }
 } else {
-    echo '已安装。如需重新安装，请删除当前目录下的 config.php (建议先备份) 后重新访问本页面.<br>multi_qr_pay';
+    $scheme = (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') ? 'https://' : 'http://';
+    echo '已安装。如需重新安装，请删除当前目录下的 config.php (建议先备份) 后重新访问本页面.<br>multi_qr_pay<br><a href="'.$scheme.$_SERVER['HTTP_HOST'].str_replace('/install.php', '/index.php', $_SERVER['PHP_SELF']).'">返回主页</a>';
+    exit();
 }
 ?>
 <!doctype html>
@@ -54,6 +57,7 @@ if (!file_exists('config.php')) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="multi_qr_pay"/>
     <link rel="shortcut icon" href="https://fifcom.cn/avatar/?transparent=1"/>
+    <style>.center {text-align: center}</style>
     <style>.center {
             text-align: center
         }</style>
@@ -113,7 +117,7 @@ if (!file_exists('config.php')) {
                 <div class="mdui-textfield mdui-textfield-floating-label">
                     <i class="mdui-icon material-icons">account_circle</i>
                     <label class="mdui-textfield-label">姓名 / 昵称</label>
-                    <input class="mdui-textfield-input" type="text" required/>
+                    <input class="mdui-textfield-input" name="name" type="text" required/>
                     <div class="mdui-textfield-error">*必填，不能为空</div>
                 </div>
                 <div class="mdui-textfield mdui-textfield-floating-label">
@@ -428,6 +432,15 @@ if (!file_exists('config.php')) {
         <div class="mdui-dialog-actions">
             <button class="mdui-btn mdui-ripple" mdui-dialog-confirm="">确定</button>
         </div>
+    </div>
+    <br><br><hr/><br><br>
+    <div class="mdui-container mdui-typo center">
+        <div class="mdui-typo-body-2-opacity">请确认您在访问</div>
+        <div class="mdui-chip mdui-hoverable">
+            <span class="mdui-chip-icon <?php echo $GLOBALS['scheme'] == 'https://' ? 'mdui-color-green' : '';?>"><i class="mdui-icon material-icons"><?php echo $GLOBALS['scheme'] === 'https://' ? 'https' : 'http';?></i></span>
+            <span class="mdui-chip-title"><?=$GLOBALS['scheme'].$_SERVER['HTTP_HOST'];?></span>
+        </div>
+        <div class="mdui-typo-caption">Powered by <a style="color:<?=PRIMARY_THEME?>" href="https://github.com/FIFCOM/multi_qr_pay" target="_blank">multi_qr_pay</a> Installer</div><br><br>
     </div>
 </div>
 
