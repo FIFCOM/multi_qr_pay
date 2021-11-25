@@ -30,7 +30,7 @@ if (!file_exists('config.php')) {
         $config_file[19] = '// disable : Forced to use http, use with caution if HSTS is enabled on the website.';
         $config_file[20] = '// auto    : Automatically identify whether https is available.';
         $config_file[21] = 'const TLS_ENCRYPT = \'auto\';';
-        $config_file[22] = 'const QRCODE_API_URL = \'https://www.zhihu.com/qrcode?url=\';';
+        $config_file[22] = 'const QRCODE_API_URL = \'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=\';';
         $config_file[23] = '';
         $config_file[24] = 'const MULTI_QR_PAY_VERSION = \'1.1\';';
         $config_file[25] = 'error_reporting(E_ALL);';

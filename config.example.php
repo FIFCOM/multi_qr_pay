@@ -20,7 +20,7 @@ const ACCENT_THEME = 'pink';
 // disable : Forced to use http, use with caution if HSTS is enabled on the website.
 // auto    : Automatically identify whether https is available.
 const TLS_ENCRYPT = 'auto';
-const QRCODE_API_URL = 'https://www.zhihu.com/qrcode?url=';
+const QRCODE_API_URL = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=';
 
 const MULTI_QR_PAY_VERSION = '1.1';
 error_reporting(E_ALL);
